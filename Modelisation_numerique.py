@@ -75,7 +75,8 @@ def Calculs_theoriques(h,f):
         V[n][Nh] = Transducteur_ultrason(t,Bm,φ)
         for m in range(1,Nh):
             V[n][m] = (((c0*δt)/(δz)) ** 2) * ( V[n-1][m+1] - 2*V[n-1][m] + V[n-1][m-1]) + 2*V[n-1][m] - V[n-2][m]
-            P[n][m] = P[n][m-1] +  δz*(-ρ0)* ((V[n][m]-V[n-1][m])/δt)
+        for n in range(1,Nt):
+            P[n][m] = P[n-1][m] +  δt*(-κ0)* ((V[n][m]-V[n][m-1])/δz)
 
     #Initialisation
     V_m,P_m = [0 for m in range(Nz)], [0 for m in range(Nz)]
@@ -96,7 +97,7 @@ def Calculs_theoriques(h,f):
     #graphique(x,P_m,"Position (en cm)","Pression (en Pa)", "Graphe pression moyenne à f="+str(f/1000)+" kHz, h = "+str(h*100) +" cm")
     #graphique(x,V_m,"Position (en cm)","Vitesse (en m.s-1)", "Graphe vitesse moyenne à f="+str(f/1000)+" kHz, h = "+str(h*100) +" cm")
     
-    #"""
+     #"""
     y=np.linspace(0,T*1000,Nt)
     X,Y=np.meshgrid(x,y)
     plt.figure(figsize=(25,15))
@@ -113,7 +114,7 @@ def Calculs_theoriques(h,f):
     
 def main():
     h = 2.73 * 10**-2  # distance entre les émetteurs en cm
-    f  = 39 *10**3
+    f  = 38 *10**3
     Calculs_theoriques(h,f)
     return None
 
