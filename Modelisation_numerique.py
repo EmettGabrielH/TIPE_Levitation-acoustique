@@ -76,7 +76,7 @@ def Calculs_theoriques(h,f):
         for m in range(1,Nh):
             V[n][m] = (((c0*δt)/(δz)) ** 2) * ( V[n-1][m+1] - 2*V[n-1][m] + V[n-1][m-1]) + 2*V[n-1][m] - V[n-2][m]
         for n in range(1,Nt):
-            P[n][m] = P[n-1][m] +  δt*(-κ0)* ((V[n][m]-V[n][m-1])/δz)
+            P[n][m] = P[n-1][m] +  δt*(-1/κ0)* ((V[n][m]-V[n][m-1])/δz)
 
     #Initialisation
     V_m,P_m = [0 for m in range(Nz)], [0 for m in range(Nz)]
