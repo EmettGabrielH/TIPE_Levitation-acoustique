@@ -51,8 +51,9 @@ def Calculs_theoriques(h,f):
 
 
     # Calcul champs pression + vitesse
-    Nz = 144                  # Nombre de subdivisions de H
+    Nz = 142                  # Nombre de subdivisions de H
     δz = H/Nz                 # Pas de la subdivision (en m)
+    print(δz*1000)
     Nh = int(h/δz )
 
     T = 0.0003                # Temps de l'expérience (en s)
@@ -75,7 +76,6 @@ def Calculs_theoriques(h,f):
         V[n][Nh] = Transducteur_ultrason(t,Bm,φ)
         for m in range(1,Nh):
             V[n][m] = (((c0*δt)/(δz)) ** 2) * ( V[n-1][m+1] - 2*V[n-1][m] + V[n-1][m-1]) + 2*V[n-1][m] - V[n-2][m]
-        for n in range(1,Nt):
             P[n][m] = P[n-1][m] +  δt*(-1/κ0)* ((V[n][m]-V[n][m-1])/δz)
 
     #Initialisation
@@ -97,24 +97,24 @@ def Calculs_theoriques(h,f):
     #graphique(x,P_m,"Position (en cm)","Pression (en Pa)", "Graphe pression moyenne à f="+str(f/1000)+" kHz, h = "+str(h*100) +" cm")
     #graphique(x,V_m,"Position (en cm)","Vitesse (en m.s-1)", "Graphe vitesse moyenne à f="+str(f/1000)+" kHz, h = "+str(h*100) +" cm")
     
-     #"""
+    """
     y=np.linspace(0,T*1000,Nt)
     X,Y=np.meshgrid(x,y)
     plt.figure(figsize=(25,15))
     
-    cf=plt.contourf(X,Y,V,100,cmap='jet')
-    graph=plt.contour(X,Y,V,10,colors='black')
+    cf=plt.contourf(X,Y,P,100,cmap='jet')
+    graph=plt.contour(X,Y,P,10,colors='black')
     plt.clabel(graph,inline=1,fontsize=10,fmt='%3.2f') 
     plt.colorbar(cf)
     plt.xlabel("Position selon l'axe z (en cm)")
     plt.ylabel("Temps (en ms)")
-    plt.title("Carte Vitesse par rapport au temps et à la position\n à f="+str(f/1000)+"kHz, h = "+str(h*100) +"cm")      
+    plt.title("Carte Pression par rapport au temps et à la position\n à f="+str(f/1000)+"kHz, h = "+str(h*100) +"cm")      
     plt.show()
     #"""
     
 def main():
     h = 2.73 * 10**-2  # distance entre les émetteurs en cm
-    f  = 38 *10**3
+    f  = 39 *10**3
     Calculs_theoriques(h,f)
     return None
 
